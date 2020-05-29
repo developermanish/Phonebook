@@ -34,12 +34,13 @@ const Dashboard = () => {
                         {
                             data && data.map(items => (
                                 <div className="tab w-full overflow-hidden border-t">
-                                    <input className="absolute opacity-0 " id="tab-multi-one" type="checkbox" name="tabs" />
-                                    <label className="block p-5 leading-normal cursor-pointer" for="tab-multi-one">{items.name}</label>
+                                    <input className="absolute opacity-0 " id={`${items._id}`} type="checkbox" name="tabs" />
+                                    <label className="block p-5 leading-normal cursor-pointer" for={`${items._id}`}>{items.name}</label>
                                     <div className="tab-content overflow-hidden border-l-2 bg-gray-100 border-indigo-500 leading-normal">
                                         <p className="p-5">Date Of Birth: {items.dob} </p>
                                         <p className="p-5 my-5">Email: {items.email} </p>
-                                        <p className="p-5 my-5">Mobile Number: {items.mobNo} </p>
+                                        <p className="p-5 my-5
+                                        ">Mobile Number: {items.mobNo} </p>
                                     </div>
                                 </div>
                             ))
@@ -61,9 +62,8 @@ const Dashboard = () => {
                         </div> */}
                     </div>
                 </div>
-
             </div>
-            <div classNameName="paginationWrapper">
+            <div className="paginationWrapper">
                 <Paginate
                     activePage={activePage}
                     itemsCountPerPage={5}

@@ -2,7 +2,8 @@ import React from "react";
 import App from "next/app";
 
 import "../assets/css/style.css";
-import "../components/dashboard/dashboard.css"
+import "../components/dashboard/dashboard.css";
+import "../components/search/search.css";
 
 
 class MyApp extends App {
