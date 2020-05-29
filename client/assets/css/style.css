@@ -1,0 +1,25 @@
+/*! purgecss start ignore */
+
+* {
+    @apply box-border p-0 m-0;
+}
+
+*:hover {
+    @apply transition duration-500 ease-in-out;
+}
+
+html {
+    @apply antialiased;
+}
+
+html,
+body {
+    @apply w-full h-full font-serif;
+}
+
+
+
+@tailwind components;
+/*! purgecss end ignore */
+
+@tailwind utilities;

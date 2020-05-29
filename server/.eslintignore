@@ -1,0 +1,8 @@
+node_modules/**
+docs/**
+coverage/**
+dist/**
+tests/**
+build/**
+lib/**/*.test.js
+mailgun-templates/**

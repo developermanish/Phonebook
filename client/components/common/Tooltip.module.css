@@ -1,0 +1,12 @@
+.tooltip {
+    top: -15px;
+    @apply absolute left-0 z-10 rounded;
+}
+
+.tooltip::after{
+    content: "";
+    top: -65%;
+    border-color:  transparent transparent #2d3748 transparent; /* #2d3748 = border-gray-800 */
+    @apply absolute left-0 border-8 border-solid;
+
+}
