@@ -8,10 +8,10 @@ import uuid from "uuid/v4";
 import Modal from "../common/Modal";
 import ContactForm from "./components/contactForm";
 import Button from "../common/Button";
-import { contact, contactGet, contactUpdate, contactDelete } from "../../services/contact";
+import { contact, contactUpdate } from "../../services/contact";
 
 
-const Contact = () => {
+const Contact = ({ addFlagData, handleFlag }) => {
     const [modal, setModal] = useState(false);
     const [editModal, setEditModal] = useState(false);
     const [editData, setEditData] = useState({});
@@ -25,6 +25,7 @@ const Contact = () => {
     const onSubmit = async (obj) => {
         const result = await contact(obj);
         if (!result) {
+            window.location.reload(false);
             Router.push('/');
         }
         else {
@@ -34,11 +35,7 @@ const Contact = () => {
 
     }
 
-    const handleRemoveItem = async (e) => {
-        const name = e.target.getAttribute("name");
-        const result = await contactDelete(name);
-        // setContactData(eduData.filter(data=>data.name!==name));
-    }
+
 
     const handleEditItem = (e) => {
         const name = e.target.getAttribute("name");
@@ -48,20 +45,22 @@ const Contact = () => {
     }
 
 
+    useEffect(() => {
+        addFlagData && setModal(!modal);
+    }, [addFlagData])
+
+
 
     return (
         <div className="h-screen flex items-center justify-center">
-            <div className="border border-gray-600 border-solid p-5 rounded-sm w-full h-full">
-                <div className="text-center">
-                    <h2 className="mt-2 mb-10 text-3xl text-gray-800">
-                        Phonebook
-                    </h2>
-                </div>
-                <IoIosAdd size={40} onClick={() => { setModal(!modal) }} />
+            <div className="p-5 rounded-sm w-full h-full">
+
                 {modal && (
-                    <Modal handleModal={() => { setModal(!modal) }}>
+                    <Modal handleModal={() => { setModal(!modal) }}
+                        handleFlag={handleFlag}>
                         <ContactForm
                             handleModal={() => { setModal(!modal) }}
+                            handleFlag={handleFlag}
                             onSubmit={onSubmit}
                         />
                     </Modal>)}

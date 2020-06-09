@@ -7,7 +7,7 @@ import SearchByNum from "./components/ByNum";
 
 
 const Search = () => {
-    const [filter, setFilter] = useState("name");
+    const [filter, setFilter] = useState("");
     return (
         <div className="mb-5">
             <div className="filterWrapper" style={{}}>

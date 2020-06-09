@@ -1,5 +1,5 @@
 .filterWrapper > li {
-    float: left;
+    /* float: left; */
     padding-left: 20px;
     list-style: none;
 }
@@ -17,25 +17,30 @@
     border: 1px solid #999;
     border-top-width: 0;
     list-style: none;
-    margin-top: 0;
-    max-height: 143px;
-    overflow-y: auto;
-    padding-left: 0;
-    width: calc(300px + 1rem);
+    margin-top: -0.5rem;
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;
+    width:100%;
   }
   
   .suggestions li {
     padding: 0.5rem;
+    
   }
   
   .suggestion-active,
   .suggestions li:hover {
-    background-color: #008f68;
-    color: #fae042;
+    background-color: #f7fafc;
+    color: #6574cd;
     cursor: pointer;
     font-weight: 700;
   }
   
   .suggestions li:not(:last-of-type) {
     border-bottom: 1px solid #999;
+  }
+
+  .suggestions li {
+    width: 100%;
   }

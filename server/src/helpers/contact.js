@@ -17,9 +17,16 @@ const insert = (obj) => {
 const find = (filters) => {
 
     const query = filters.query ? filters.query : {};
+    console.log(query);
+    console.log(filters);
     return Contact.find(query);
 }
 
+const findForDelete = (filters) => {
+    const _id = filters._id ? filters._id : {};
+    console.log(_id);
+    return Contact.findById(_id);
+}
 const update = (filters) => {
     const oldData = filters.oldData ? filters.oldData : {};
     const newData = filters.newData ? filters.newData : {};
@@ -36,12 +43,13 @@ const getContactObject = (filters) => {
     const query = filters.query ? filters.query : {};
     const sortBy = filters.sort ? filters.sort : { _id: -1 };
     const pageNum = filters.pageNum ? filters.pageNum : 1;
+    console.log(pageNum);
 
     return (
         Contact
             .find(query)
             .sort(sortBy)
-            .skip(contactPerPage * pageNum - contactPerPage)
+            .skip(contactPerPage * pageNum.pageNum - contactPerPage)
             .limit(contactPerPage)
 
     )
@@ -52,6 +60,7 @@ module.exports = {
     find,
     update,
     deleteData,
-    getContactObject
+    getContactObject,
+    findForDelete
 
 }

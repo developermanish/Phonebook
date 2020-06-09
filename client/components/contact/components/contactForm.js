@@ -30,7 +30,7 @@ const contactInitState = {
 
 // const isObjectEmpty =(obj)=>(obj && typeof obj === "object" && !Object.keys(obj).length)
 
-const contactForm = ({ dataAdd, handleModal, editContent = {}, onSubmit, onEditSubmit }) => {
+const contactForm = ({ dataAdd, handleModal, editContent = {}, onSubmit, onEditSubmit, handleFlag }) => {
     const [state, dispatch] = useReducer(contactReducer, contactInitState);
     const {
         name, dob, mobNo, email
@@ -79,6 +79,7 @@ const contactForm = ({ dataAdd, handleModal, editContent = {}, onSubmit, onEditS
             }
             // dataAdd(state);
             handleModal();
+            handleFlag();
         }
 
     }

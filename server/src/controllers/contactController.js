@@ -45,12 +45,12 @@ const updateContact = async (name, obj) => {
     return contactHelper.update(filters);
 }
 
-const deleteContact = async (name, userid) => {
+const deleteContact = async (id) => {
     let filters = {
-        name: name,
-        userid: userid
+        _id: id
     };
-    const data = await contactHelper.find(filters);
+    const data = await contactHelper.findForDelete(filters);
+    console.log(data);
     if (!data) {
         const err = {
             message: `No contact data is found for ${name}.`,
@@ -65,6 +65,36 @@ const deleteContact = async (name, userid) => {
     return contactHelper.deleteData(filters);
 }
 
+const searchContactByName = async (keyword) => {
+    // console.log(keyword)
+    let filters = {};
+    filters.query = {
+        name: { $regex: new RegExp('^' + keyword.keyword, 'i') }
+    };
+    return await contactHelper.find(filters);
+
+}
+
+const searchContactByEmail = async (keyword) => {
+    // console.log(keyword)
+    let filters = {};
+    filters.query = {
+        email: { $regex: new RegExp('^' + keyword.keyword, 'i') }
+    };
+    return await contactHelper.find(filters);
+
+}
+
+const searchContactByMobNo = async (keyword) => {
+    // console.log(keyword)
+    let filters = {};
+    filters.query = {
+        mobNo: { $regex: new RegExp('^' + keyword.keyword, 'i') }
+    };
+    return await contactHelper.find(filters);
+
+}
+
 
 module.exports = {
 
@@ -73,5 +103,8 @@ module.exports = {
     updateContact,
     deleteContact,
     getContactCount,
-    getPaginatedContact
+    getPaginatedContact,
+    searchContactByName,
+    searchContactByEmail,
+    searchContactByMobNo
 }

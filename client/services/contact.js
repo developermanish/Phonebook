@@ -21,7 +21,9 @@ export const count = async () => {
 
 export const readContact = async (pageNum) => {
     const result = await fetch("POST", "/readContact", {
-        body: { ...pageNum }
+        body: {
+            pageNum: pageNum
+        }
     });
     if (result.status !== 200) {
         return { message: result.message };
@@ -45,11 +47,49 @@ export const contactUpdate = async (obj) => {
     }
 }
 
-export const contactDelete = async (name) => {
+export const contactDelete = async (id) => {
     const result = await fetch("DELETE", "/contact", {
-        body: { name }
+        body: {
+            id: id
+        }
+    });
+    console.log(result);
+    if (result.status !== 200) {
+        return { message: result.message };
+    } else {
+        return { message: result.message };
+    }
+}
+
+export const searchByName = async (keyword) => {
+    const result = await fetch("POST", "/searchName", {
+        body: { keyword }
     });
     if (result.status !== 200) {
         return { message: result.message };
+    } else {
+        return result.data;
+    }
+}
+
+export const searchByEmail = async (keyword) => {
+    const result = await fetch("POST", "/searchEmail", {
+        body: { keyword }
+    });
+    if (result.status !== 200) {
+        return { message: result.message };
+    } else {
+        return result.data;
+    }
+}
+
+export const searchByMobNo = async (keyword) => {
+    const result = await fetch("POST", "/searchMobNo", {
+        body: { keyword }
+    });
+    if (result.status !== 200) {
+        return { message: result.message };
+    } else {
+        return result.data;
     }
 }
