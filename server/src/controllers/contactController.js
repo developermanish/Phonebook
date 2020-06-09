@@ -26,14 +26,14 @@ const getPaginatedContact = (pageNum) => {
     return contactHelper.getContactObject(filters)
 }
 
-const updateContact = async (name, obj) => {
+const updateContact = async (id, obj) => {
     let filters = {
-        name: name,
+        _id: id,
     }
-    const oldData = await contactHelper.find(filters);
+    const oldData = await contactHelper.findById(filters);
     if (!oldData) {
         const err = {
-            message: `No contact data is found for ${name}.`,
+            message: `No contact data is found`,
             statusCode: resStatus.NOT_FOUND
         }
         throw customError(err);
@@ -49,8 +49,7 @@ const deleteContact = async (id) => {
     let filters = {
         _id: id
     };
-    const data = await contactHelper.findForDelete(filters);
-    console.log(data);
+    const data = await contactHelper.findById(filters);
     if (!data) {
         const err = {
             message: `No contact data is found for ${name}.`,
@@ -65,8 +64,14 @@ const deleteContact = async (id) => {
     return contactHelper.deleteData(filters);
 }
 
+const findContact = async (id) => {
+    const filters = {
+        _id: id
+    };
+    return contactHelper.findById(filters);
+}
+
 const searchContactByName = async (keyword) => {
-    // console.log(keyword)
     let filters = {};
     filters.query = {
         name: { $regex: new RegExp('^' + keyword.keyword, 'i') }
@@ -76,7 +81,6 @@ const searchContactByName = async (keyword) => {
 }
 
 const searchContactByEmail = async (keyword) => {
-    // console.log(keyword)
     let filters = {};
     filters.query = {
         email: { $regex: new RegExp('^' + keyword.keyword, 'i') }
@@ -86,7 +90,6 @@ const searchContactByEmail = async (keyword) => {
 }
 
 const searchContactByMobNo = async (keyword) => {
-    // console.log(keyword)
     let filters = {};
     filters.query = {
         mobNo: { $regex: new RegExp('^' + keyword.keyword, 'i') }
@@ -102,6 +105,7 @@ module.exports = {
     getContactData,
     updateContact,
     deleteContact,
+    findContact,
     getContactCount,
     getPaginatedContact,
     searchContactByName,

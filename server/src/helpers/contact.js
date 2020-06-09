@@ -17,14 +17,11 @@ const insert = (obj) => {
 const find = (filters) => {
 
     const query = filters.query ? filters.query : {};
-    console.log(query);
-    console.log(filters);
     return Contact.find(query);
 }
 
-const findForDelete = (filters) => {
+const findById = (filters) => {
     const _id = filters._id ? filters._id : {};
-    console.log(_id);
     return Contact.findById(_id);
 }
 const update = (filters) => {
@@ -61,6 +58,6 @@ module.exports = {
     update,
     deleteData,
     getContactObject,
-    findForDelete
+    findById
 
 }

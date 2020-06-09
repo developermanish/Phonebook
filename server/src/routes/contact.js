@@ -78,17 +78,17 @@ router.post("/readContact", async (req, res) => {
 });
 
 router.put("/contact", async (req, res) => {
-    const name = req.body.name;
+    const id = req.body._id;
     // const userid = req.body.userid;
     const updateObject = {
         ...req.body
     }
     try {
-        const updateContact = await contact.updateContact(name, updateObject);
+        const updateContact = await contact.updateContact(id, updateObject);
         if (!updateContact) {
             return res
                 .status(resStatus.INTERNAL_SERVER_ERROR)
-                .send({ message: `Error updating the contact having name: ${name}` });
+                .send({ message: `Error updating the contact` });
         }
 
         return res
@@ -118,6 +118,19 @@ router.delete("/contact", async (req, res) => {
 
     }
 });
+
+router.post("/findContact", async (req, res) => {
+    const id = req.body.id;
+    try {
+        const result = await contact.findContact(id);
+        return res.status(resStatus.SUCCESS_OK).send({ Data: result });
+    } catch (error) {
+        if (error.statusCode) {
+            return res.status(error.statusCode).send({ message: error.message });
+        }
+        return res.status(resStatus.INTERNAL_SERVER_ERROR).send(error.message);
+    }
+})
 
 router.post("/searchName", async (req, res) => {
     const keyword = { ...req.body };

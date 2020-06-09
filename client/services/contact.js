@@ -53,11 +53,23 @@ export const contactDelete = async (id) => {
             id: id
         }
     });
-    console.log(result);
     if (result.status !== 200) {
         return { message: result.message };
     } else {
         return { message: result.message };
+    }
+}
+
+export const findContact = async (id) => {
+    const result = await fetch("POST", "/findContact", {
+        body: {
+            id: id
+        }
+    });
+    if (result.status !== 200) {
+        return { message: result.message };
+    } else {
+        return result.Data;
     }
 }
 

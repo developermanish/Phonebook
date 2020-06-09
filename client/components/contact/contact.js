@@ -11,15 +11,21 @@ import Button from "../common/Button";
 import { contact, contactUpdate } from "../../services/contact";
 
 
-const Contact = ({ addFlagData, handleFlag }) => {
+const Contact = ({ addFlagData, handleFlag, editData, editFlag, handleEditFlag }) => {
     const [modal, setModal] = useState(false);
     const [editModal, setEditModal] = useState(false);
-    const [editData, setEditData] = useState({});
+    // const [editData, setEditData] = useState({});
 
 
     const onEditSubmit = async (obj) => {
         const result = await contactUpdate(obj);
         console.log(result);
+        if (!result) {
+            window.location.reload(false);
+            Router.push('/')
+        } else {
+            alert(result);
+        }
     }
 
     const onSubmit = async (obj) => {
@@ -37,17 +43,22 @@ const Contact = ({ addFlagData, handleFlag }) => {
 
 
 
-    const handleEditItem = (e) => {
-        const name = e.target.getAttribute("name");
-        eduData.map(data => ((data.name === name) && setEditData(data)));
-        setEditModal(!editModal);
-        handleRemoveItem(e);
-    }
+    // const handleEditItem = (e) => {
+    //     const name = e.target.getAttribute("name");
+    //     eduData.map(data => ((data.name === name) && setEditData(data)));
+    //     setEditModal(!editModal);
+    //     handleRemoveItem(e);
+    // }
 
 
     useEffect(() => {
         addFlagData && setModal(!modal);
     }, [addFlagData])
+
+    useEffect(() => {
+        editFlag && setEditModal(!editModal);
+    }, [editFlag])
+
 
 
 
@@ -65,10 +76,13 @@ const Contact = ({ addFlagData, handleFlag }) => {
                         />
                     </Modal>)}
                 {editModal && (
-                    <Modal handleModal={() => { setEditModal(!editModal) }}>
+                    <Modal handleModal={() => { setEditModal(!editModal) }}
+                        handleFlag={handleEditFlag}
+                    >
                         <ContactForm
                             editContent={editData}
                             onEditSubmit={onEditSubmit}
+                            handleFlag={handleEditFlag}
                             handleModal={() => { setEditModal(!editModal) }}
                         />
                     </Modal>

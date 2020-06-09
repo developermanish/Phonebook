@@ -8,13 +8,15 @@ import Contact from "../contact/contact";
 
 import Button from "../common/Button";
 
-import { count, readContact, contactDelete } from "../../services/contact";
+import { count, readContact, contactDelete, findContact } from "../../services/contact";
 
 const Dashboard = () => {
     const [activePage, setActivePage] = useState(1);
     const [items, setItems] = useState(0);
     const [data, setData] = useState([]);
     const [addFlagData, setAddFlagData] = useState(false);
+    const [editData, setEditData] = useState({});
+    const [editFlag, setEditFlag] = useState(false);
 
 
     const handlePageChange = (pageNumber) => {
@@ -42,6 +44,11 @@ const Dashboard = () => {
         }
     }
 
+    const handleEdit = async (id) => {
+        const result = await findContact(id);
+        setEditData(result);
+        setEditFlag(true);
+    }
     return (
         <div>
             <div style={{ display: 'flex', justifyContent: 'center' }}>
@@ -59,7 +66,7 @@ const Dashboard = () => {
                                                 <Button onClick={() => handleRemoveItem(items._id)}>Remove</Button>
                                             </div>
                                             <div className="p-2">
-                                                <Button>Edit</Button>
+                                                <Button onClick={() => handleEdit(items._id)}>Edit</Button>
                                             </div>
                                         </div>
                                         <p className="p-5">Date Of Birth: {items.dob} </p>
@@ -88,7 +95,9 @@ const Dashboard = () => {
             </div>
             {
                 addFlagData && <Contact addFlagData={addFlagData} handleFlag={() => setAddFlagData(!addFlagData)} />
-
+            }
+            {
+                editFlag && <Contact editData={editData} editFlag={editFlag} handleEditFlag={() => setEditFlag(!editFlag)} />
             }
         </div>
     )
