@@ -3,17 +3,44 @@ import TextInput from "../../common/TextInput";
 import SuggestionList from "./Suggestion";
 import debounce from "lodash.debounce";
 import { searchByName } from "../../../services/contact";
+import useDebounce from "./useDebounce";
+
 // import "../search.css";
-var a = "";
 const ByName = () => {
+    const [searchTerm, setSearchTerm] = useState('');
+    const [results, setResults] = useState([]);
+    const [isSearching, setIsSearching] = useState(false);
 
-    const [keyword, setKeyword] = useState("");
+    const debouncedSearchTerm = useDebounce(searchTerm, 500);
 
-    const onChange = () => {
-        const alpha = setKeyword(e.target.value);
-        console.log(alpha);
-        // getSuggestions()
-    }
+    useEffect(
+        () => {
+            async function fetching() {
+                if (debouncedSearchTerm) {
+                    setIsSearching(true);
+                    console.log(debouncedSearchTerm)
+                    const response = await searchByName(debouncedSearchTerm);
+                    console.log(response)
+                    if (response) {
+                        setIsSearching(false);
+                        setResults(response);
+                    }
+                    // searchCharacters(debouncedSearchTerm)//call API and 
+                } else {
+                    setResults([]);
+                }
+            }
+            fetching()
+        }, [debouncedSearchTerm]
+    );
+
+    // const [keyword, setKeyword] = useState("");
+
+    // const onChange = () => {
+    //     const alpha = setKeyword(e.target.value);
+    //     console.log(alpha);
+    //     // getSuggestions()
+    // }
 
     // const [showSuggestions, setShowSuggestions] = useState(false);
     // const [keyword, setKeyword] = useState("");
@@ -134,15 +161,23 @@ const ByName = () => {
             <TextInput
                 type="text"
                 placeholder="Search By Name"
-                value={keyword}
-                onChange={onChange}
+                onChange={e => setSearchTerm(e.target.value)}
             // onKeyDown={onKeyDown}
             />
+            {isSearching && <div>Searching...</div>}
+            {console.log(results)}
+            {
+                results.map(result => (
+                    <div key={result._id}>
+                        <h4>{result.name}</h4>
+                    </div>
+                ))
+            }
             {/* 
             {suggestionsListComponent}
             {suggestions && console.log(suggestions)} */}
         </div>
-    )
+    );
 }
 export default ByName;
 

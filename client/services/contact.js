@@ -35,7 +35,6 @@ export const readContact = async (pageNum) => {
 export const contactGet = async () => {
     const result = await fetch("GET", "/contact");
     console.log(result);
-    // console.log(abc);
 }
 
 export const contactUpdate = async (obj) => {
